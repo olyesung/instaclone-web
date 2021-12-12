@@ -14,32 +14,31 @@ import { ThemeProvider } from "styled-components";
 import { darkTheme, GlobalStyles, lightTheme } from "./styles";
 import SignUp from "./screens/SignUp";
 import routes from "./routes";
+import { HelmetProvider } from "react-helmet-async";
 
 function App() {
   const isLoggedIn = useReactiveVar(isLoggedInVar);
   const darkMode = useReactiveVar(darkModeVar);
   return (
-    <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
-      <GlobalStyles />
-      <Router>
-        <Fragment>
-          <Routes>
-            <Route path="/" exact element={isLoggedIn ? <Home /> : <Login />} />
-            {!isLoggedIn ? (
-              <Route path={routes.signUp} exact element={<SignUp />} />
-            ) : null}
-          </Routes>
-        </Fragment>
-        {/* <Switch>
-          <Route path="/" exact>
-            {isLoggedIn ? <Home /> : <Login />}
-          </Route>
-          <Route>
-            <NotFound />
-          </Route>
-        </Switch> */}
-      </Router>
-    </ThemeProvider>
+    <HelmetProvider>
+      <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
+        <GlobalStyles />
+        <Router>
+          <Fragment>
+            <Routes>
+              <Route
+                path={routes.home}
+                exact
+                element={isLoggedIn ? <Home /> : <Login />}
+              />
+              {!isLoggedIn ? (
+                <Route path={routes.signUp} exact element={<SignUp />} />
+              ) : null}
+            </Routes>
+          </Fragment>
+        </Router>
+      </ThemeProvider>
+    </HelmetProvider>
   );
 }
 

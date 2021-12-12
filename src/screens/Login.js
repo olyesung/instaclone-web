@@ -3,7 +3,7 @@ import {
   faInstagram,
 } from "@fortawesome/free-brands-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { useState } from "react";
+import { useForm } from "react-hook-form";
 import styled from "styled-components";
 import AuthLayout from "../components/auth/AuthLayout";
 import BottomBox from "../components/auth/BottomBox";
@@ -23,20 +23,12 @@ const FacebookLogin = styled.div`
 `;
 
 function Login() {
-  const [username, setUsername] = useState("");
-  const [usernameError, setUsernameError] = useState("");
-  const onUsernameChange = (event) => {
-    setUsernameError("");
-    setUsername(event.target.value);
+  const { register, handleSubmit } = useForm();
+  const onSubmitValid = (data) => {
+    console.log(data);
   };
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    if (username === "") {
-      setUsernameError("Not empty pls.");
-    }
-    if (username.length < 10) {
-      setUsernameError("too short");
-    }
+  const onSubmitInvalid = (data) => {
+    console.log(data, "invalid");
   };
   return (
     <AuthLayout>
@@ -45,9 +37,24 @@ function Login() {
         <div>
           <FontAwesomeIcon icon={faInstagram} size="3x" />
         </div>
-        <form>
-          <Input type="text" placeholder="Username" />
-          <Input type="password" placeholder="Password" />
+        <form onSubmit={handleSubmit(onSubmitValid, onSubmitInvalid)}>
+          <Input
+            {...register("message", {
+              required: "Username is required",
+              minLength: 5,
+            })}
+            name="username"
+            type="text"
+            placeholder="Username"
+          />
+          <Input
+            {...register("message", {
+              required: "Password is required.",
+            })}
+            name="password"
+            type="password"
+            placeholder="Password"
+          />
           <Button type="submit" value="Log in" />
         </form>
         <Separator />

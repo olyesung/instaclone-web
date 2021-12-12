@@ -1,5 +1,11 @@
+import React, { Fragment } from "react";
 import { useReactiveVar } from "@apollo/client";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Switch,
+  Routes,
+} from "react-router-dom";
 import Home from "./screens/Home";
 import Login from "./screens/Login";
 import NotFound from "./screens/NotFound";
@@ -14,14 +20,19 @@ function App() {
     <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
       <GlobalStyles />
       <Router>
-        <Switch>
+        <Fragment>
+          <Routes>
+            <Route path="/" exact element={<Login />} />
+          </Routes>
+        </Fragment>
+        {/* <Switch>
           <Route path="/" exact>
             {isLoggedIn ? <Home /> : <Login />}
           </Route>
           <Route>
             <NotFound />
           </Route>
-        </Switch>
+        </Switch> */}
       </Router>
     </ThemeProvider>
   );

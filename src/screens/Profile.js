@@ -158,6 +158,7 @@ function Profile() {
       },
     });
   };
+
   const [unfollowUser] = useMutation(UNFOLLOW_USER_MUTATION, {
     variables: {
       username,

@@ -40,7 +40,15 @@ function App() {
                 {!isLoggedIn ? (
                   <Route path={routes.signUp} exact element={<SignUp />} />
                 ) : null}
-                <Route path={`/users/:username`} exact element={<Profile />} />
+                <Route
+                  path={`/users/:username`}
+                  exact
+                  element={
+                    <Layout>
+                      <Profile />
+                    </Layout>
+                  }
+                />
               </Routes>
             </Fragment>
           </Router>
